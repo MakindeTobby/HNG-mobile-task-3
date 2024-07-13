@@ -1,6 +1,6 @@
 # Timbu Shopping App
 
-This is a Shopping App! This application allows users to browse products, view details, add them to a cart, and checkout.
+This is an Update on the USER INTERFACE of the HNG Shopping App Task! This application allows users to simulate the experience of browsing products, view details, add them to a cart, and checkout.
 
 Data fetched from the Timbu Api
 
@@ -36,8 +36,8 @@ Data fetched from the Timbu Api
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/MakindeTobby/Timbu-shopping-app.git
-   cd simple-ecommerce-app-HNG
+   git clone https://github.com/MakindeTobby/HNG-mobile-task-3.git
+   cd HNG-mobile-task-3
    ```
 
 2. Install dependencies:
@@ -62,29 +62,29 @@ Data fetched from the Timbu Api
 
 ### Product List
 
-![Products](./assets/screenshot/product.png)
+![Products](./assets/screenshot/product-new.png)
 
 ### Product Detail
 
-![Detail](./assets/screenshot/detailPage.png)
+![Detail](./assets/screenshot/detailPage-new.png)
 
 ### Checkout
 
-![Checkout](./assets/screenshot/cart.png)
+![Checkout](./assets/screenshot/cart-new.png)
 
 ### Order Successful
 
-![Completed](./assets/screenshot/checkout.png)
+![Completed](./assets/screenshot/checkout-new.png)
 
 ### Empty Cart
 
-![Empty](./assets/screenshot/empty.png)
+![Empty](./assets/screenshot/empty-new.png)
 
 ## APK Download
 
 You can download the latest APK from the following link:
 
-[Download APK](https://expo.dev/artifacts/eas/gSFuss3Hz91dSXH1UQ2WNd.apk)
+[Download APK](https://expo.dev/artifacts/eas/u5e155fZ53c1Qz4iFVftxp.apk)
 
 ## Usage
 
