@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.neutral(0.2),
     borderWidth: 1,
     borderRadius: 3,
-    // marginHorizontal: wp(2),
+    marginHorizontal: wp(2),
     marginVertical: wp(2),
     marginBottom: 12,
     // shadowColor: "#000",

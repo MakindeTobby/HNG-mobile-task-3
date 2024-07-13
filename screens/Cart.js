@@ -179,11 +179,11 @@ const styles = StyleSheet.create({
     height: 100,
   },
   detailsContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     backgroundColor: theme.colors.grayBg,
     paddingVertical: 14,
     marginBottom: 50,
-    // marginHorizontal: wp(2),
+    marginHorizontal: wp(2),
     borderRadius: 3,
     gap: 20,
   },
