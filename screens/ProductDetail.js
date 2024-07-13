@@ -251,7 +251,9 @@ const styles = StyleSheet.create({
   },
   productName: {
     fontSize: hp(2.2),
-    fontWeight: "bold",
+    // Montserrat_400Regular,
+
+    fontFamily: "Montserrat_600SemiBold",
   },
   sizeContainer: {
     flexDirection: "row",
@@ -269,7 +271,7 @@ const styles = StyleSheet.create({
   },
   sizeText: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontFamily: "Montserrat_600SemiBold",
   },
   startButton: {
     marginBottom: hp(3),
@@ -284,6 +286,7 @@ const styles = StyleSheet.create({
     fontSize: hp(2),
     letterSpacing: 1,
     alignSelf: "center",
+    fontFamily: "Montserrat_600SemiBold",
   },
   disabledButton: {
     marginBottom: hp(3),

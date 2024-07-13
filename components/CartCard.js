@@ -13,7 +13,7 @@ import {
   increaseQuantity,
   removeFromCart,
 } from "../store/Slices/CartSlice";
-import { hp } from "../helpers/common";
+import { hp, wp } from "../helpers/common";
 import { theme } from "../constants/theme";
 import { FontAwesome } from "@expo/vector-icons";
 
@@ -38,7 +38,7 @@ const CartCard = ({ item }) => {
         onPress={() => handleRemove(item.id)}
         style={styles.removeButton}
       >
-        <Text style={styles.removeButtonText}>x</Text>
+        <FontAwesome name="trash-o" size={18} />
       </TouchableOpacity>
       <Image
         style={styles.itemImage}
@@ -56,15 +56,7 @@ const CartCard = ({ item }) => {
         <Text>x{item.quantity}</Text>
       </View> */}
         <View style={[styles.counterCont]}>
-          <Text
-            style={{
-              fontSize: hp(2),
-              fontWeight: "bold",
-            }}
-          >
-            ₦{price * item.quantity}
-          </Text>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
             <Pressable
               style={[styles.sizeButton, { backgroundColor: "#f0f0f0" }]}
               onPress={() => handleDecrease(item.id)}
@@ -79,6 +71,14 @@ const CartCard = ({ item }) => {
               <FontAwesome name="plus" size={13} />
             </Pressable>
           </View>
+          <Text
+            style={{
+              fontSize: hp(1.6),
+              fontFamily: "Montserrat_600SemiBold",
+            }}
+          >
+            ₦{price * item.quantity}
+          </Text>
         </View>
       </View>
     </View>
@@ -107,15 +107,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 12,
     paddingHorizontal: 8,
-    backgroundColor: "white",
-    borderRadius: 10,
-    marginHorizontal: 10,
+    // backgroundColor: "white",
+    borderColor: theme.colors.neutral(0.2),
+    borderWidth: 1,
+    borderRadius: 3,
+    // marginHorizontal: wp(2),
+    marginVertical: wp(2),
     marginBottom: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.02,
+    // shadowRadius: 3.84,
+    // elevation: 2,
     position: "relative",
   },
   contentBox: {
@@ -125,11 +128,11 @@ const styles = StyleSheet.create({
   itemImage: {
     height: 70,
     width: 58,
-    borderRadius: 10,
   },
   itemTitle: {
-    fontWeight: "bold",
+    fontFamily: "Montserrat_600SemiBold",
     color: "#4B5563",
+    marginVertical: hp(2),
   },
   quantityContainer: {
     flexDirection: "row",
@@ -166,16 +169,16 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     paddingHorizontal: 10,
     borderTopEndRadius: theme.radius.sm,
-    backgroundColor: theme.colors.primary,
+    // backgroundColor: theme.colors.primary,
     zIndex: 99,
-    top: 0,
+    top: 5,
     right: 0,
   },
   removeButtonText: {
     color: "white",
   },
   startButton: {
-    marginBottom: 5,
+    marginBottom: 10,
     backgroundColor: theme.colors.primary,
     padding: 15,
     paddingHorizontal: 90,
@@ -198,15 +201,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   sizeButton: {
-    width: 43,
-    height: 43,
-    borderRadius: 20,
+    width: 25,
+    height: 25,
+    borderColor: theme.colors.neutral(0.2),
+    borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 5,
   },
   sizeText: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontFamily: "Montserrat_600SemiBold",
   },
 });

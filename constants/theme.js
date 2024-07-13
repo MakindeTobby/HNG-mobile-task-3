@@ -3,8 +3,8 @@ export const theme = {
     white: "#fff",
     black: "#000",
     grayBg: "#e5e5e5",
-    primary: "#DB3022",
-    dark: "#222222",
+    primary: "#FF7F7D",
+    dark: "#2A2A2A",
     //neutral
     neutral: (opacity) => `rgba(10,10,10, ${opacity})`,
   },

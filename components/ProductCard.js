@@ -1,5 +1,6 @@
 import {
   Image,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -10,8 +11,36 @@ import React from "react";
 import { hp, wp } from "../helpers/common";
 import { theme } from "../constants/theme";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  decreaseQuantity,
+  increaseQuantity,
+  removeFromCart,
+} from "../store/Slices/CartSlice";
+import { FontAwesome } from "@expo/vector-icons";
 
 const ProductCard = ({ item }) => {
+  const cartItems = useSelector((state) => state.cart.cart);
+  const productInCart = cartItems.find((cartItem) => cartItem.id === item.id);
+  const quantity = productInCart ? productInCart.quantity : 0;
+  const dispatch = useDispatch();
+
+  const handleIncrease = () => {
+    if (quantity > 0) {
+      dispatch(increaseQuantity(item.id));
+    } else {
+      dispatch(addToCart(item));
+    }
+  };
+
+  const handleDecrease = () => {
+    if (quantity > 1) {
+      dispatch(decreaseQuantity(item.id));
+    } else {
+      dispatch(removeFromCart(item.id));
+    }
+  };
   const navigation = useNavigation();
   const price = item.current_price?.[0]?.NGN[0] ?? "N/A";
   return (
@@ -37,26 +66,46 @@ const ProductCard = ({ item }) => {
             {item.name}
           </Text>
         </View>
-        <View style={{ paddingVertical: 2 }}>
+        <View>
           <Text
             style={{
-              fontWeight: theme.fontWeights.bold,
-              fontSize: hp(2),
-              textAlign: "center",
+              fontSize: 13,
+              color: theme.colors.primary,
             }}
           >
-            ₦{price}
+            N {price}
           </Text>
         </View>
-
-        {/* <View className="pt-2 flex-col items-start">
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          //   onPress={() => addToCheckout(item)}
-        >
-          <Text style={styles.buttonText}>Add to Cart</Text>
-        </TouchableOpacity>
-      </View> */}
+        {quantity <= 0 ? (
+          <View>
+            <TouchableOpacity
+              style={styles.buttonStyle}
+              onPress={handleIncrease}
+            >
+              <Text style={styles.buttonText}>Add to Cart</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <Pressable
+              style={[styles.sizeButton, { backgroundColor: "#ddd" }]}
+              onPress={handleDecrease}
+            >
+              <FontAwesome
+                name="minus"
+                size={13}
+                color={theme.colors.primary}
+              />
+            </Pressable>
+            <Text style={styles.sizeText}>{quantity}</Text>
+            <Pressable
+              style={[styles.sizeButton, { backgroundColor: "#ddd" }]}
+              onPress={handleIncrease}
+            >
+              <FontAwesome name="plus" size={13} color={theme.colors.primary} />
+            </Pressable>
+          </View>
+        )}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -70,24 +119,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: wp(2),
   },
   productName: {
-    marginTop: 4,
-    fontSize: hp(2),
-    fontWeight: theme.fontWeights.semibold,
+    fontSize: 12,
     color: theme.colors.neutral(0.8),
+    fontFamily: "Montserrat_600SemiBold",
   },
-  productPrice: {
-    fontSize: hp(2),
-    color: theme.colors.primary,
-    paddingHorizontal: 10,
-  },
+
   imgCont: {
     backgroundColor: theme.colors.neutral(0.1),
     width: "100%",
     height: hp(25),
-    borderRadius: theme.radius.md,
+    borderRadius: theme.radius.xs,
     alignItems: "center",
     justifyContent: "center",
     borderCurve: "continuous",
@@ -95,9 +138,9 @@ const styles = StyleSheet.create({
   },
   product: {
     flex: 1,
-    marginHorizontal: 8,
     marginBottom: wp(1),
     color: "#fff",
+    gap: 2,
   },
   imageUrl: {
     flex: 1,
@@ -105,18 +148,33 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   buttonStyle: {
-    //  className="px-5 py-2 rounded-full  "
-    backgroundColor: theme.colors.primary,
-    color: "#fff",
-    paddingHorizontal: wp(2),
-    paddingVertical: hp(1.2),
-    borderRadius: theme.radius.xs,
+    width: 93,
+    height: 38,
+    marginVertical: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 14,
     borderCurve: "continuous",
+    borderWidth: 1,
+    borderColor: theme.colors.primary,
   },
   buttonText: {
     textAlign: "center",
-    color: "#fff",
-    fontSize: hp(1.6),
-    fontWeight: theme.fontWeights.bold,
+    color: theme.colors.dark,
+    fontSize: 12,
+  },
+  sizeButton: {
+    width: 25,
+    height: 25,
+    borderColor: theme.colors.neutral(0.2),
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 12,
+  },
+  sizeText: {
+    color: theme.colors.dark,
+    fontSize: 14,
+    fontFamily: "Montserrat_600SemiBold",
   },
 });

@@ -3,67 +3,74 @@ import {
   FlatList,
   StyleSheet,
   SafeAreaView,
-  Image,
   View,
   Text,
   Pressable,
+  StatusBar,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CartCard from "../components/CartCard";
-import { hp } from "../helpers/common";
+import { hp, wp } from "../helpers/common";
 import { theme } from "../constants/theme";
-import { clearCart } from "../store/Slices/CartSlice";
 import { useNavigation } from "@react-navigation/native";
+import Header from "../components/Header";
+import { totalCartPriceSelector } from "../store/selectors/CartSelector";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cart);
-
-  const { top } = useSafeAreaInsets();
-  const paddingTop = top > 0 ? top + 10 : 30;
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const handleSubmitOrder = () => {
-    // Your order submission logic
-    // For example, an API call to submit the order
-    // If the order submission is successful:
-    navigation.navigate("Complete");
-    dispatch(clearCart());
+    navigation.navigate("Payment");
   };
+  const totalCartPrice = useSelector(totalCartPriceSelector);
+  const deliveryFee = 1500;
+
+  const renderEmptyCart = () => (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>No Item in Cart</Text>
+    </View>
+  );
+
+  const renderFooter = () => (
+    <View style={styles.detailsContainer}>
+      <Text style={styles.itemTitle}>Shopping Summary</Text>
+      <View style={styles.textCont}>
+        <Text style={styles.itemTitle}>Sub-Total</Text>
+        <Text style={styles.itemTitle}>
+          N {totalCartPrice.toLocaleString()}
+        </Text>
+      </View>
+      <View style={styles.textCont}>
+        <Text style={styles.itemTitle}>Delivery Fee</Text>
+        <Text style={styles.itemTitle}>N {deliveryFee.toLocaleString()}</Text>
+      </View>
+      <View style={styles.line} />
+      <View style={styles.textCont}>
+        <Text style={styles.itemTitle}>Total Amount</Text>
+        <Text style={styles.itemTitle}>
+          N {Number(totalCartPrice + deliveryFee).toLocaleString()}
+        </Text>
+      </View>
+      <Pressable style={styles.startButton} onPress={handleSubmitOrder}>
+        <Text style={styles.startText}>Checkout</Text>
+      </Pressable>
+    </View>
+  );
 
   return (
-    <SafeAreaView style={[styles.container, { paddingTop }]}>
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.title}>My Cart</Text>
-        </View>
-      </View>
-      {cartItems.length === 0 ? (
-        <View style={styles.emptyContainer}>
-          <View>
-            <Image
-              style={styles.cartCont}
-              source={require("../assets/images/cart.png")}
-            />
-          </View>
-          <Text style={styles.emptyText}>Your cart is empty.</Text>
-        </View>
-      ) : (
-        <>
-          <FlatList
-            data={cartItems}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <CartCard item={item} />}
-          />
-
-          <View>
-            <Pressable style={styles.startButton} onPress={handleSubmitOrder}>
-              <Text style={styles.startText}>SUBMIT ORDER</Text>
-            </Pressable>
-          </View>
-        </>
-      )}
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle={"default"} />
+      <Header name={"My Cart"} />
+      <FlatList
+        data={cartItems}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <CartCard item={item} />}
+        ListEmptyComponent={renderEmptyCart}
+        ListFooterComponent={cartItems.length > 0 ? renderFooter : null}
+        contentContainerStyle={{ flexGrow: 1 }}
+      />
     </SafeAreaView>
   );
 };
@@ -73,9 +80,8 @@ export default Cart;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: wp(4),
   },
-
   title: {
     fontSize: hp(3),
     fontWeight: theme.fontWeights.semibold,
@@ -88,10 +94,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   emptyText: {
-    fontSize: 18,
+    fontSize: 24,
     color: "#4B5563",
+    fontFamily: "Montserrat_400Regular",
   },
-
   contentBox: {
     flex: 1,
     marginLeft: 10,
@@ -101,8 +107,13 @@ const styles = StyleSheet.create({
     width: 56,
     borderRadius: 10,
   },
+  line: {
+    borderWidth: 1,
+    borderStyle: "dotted",
+    borderColor: theme.colors.neutral(0.5),
+  },
   itemTitle: {
-    fontWeight: "bold",
+    fontFamily: "Montserrat_600SemiBold",
     color: "#4B5563",
   },
   quantityContainer: {
@@ -157,13 +168,28 @@ const styles = StyleSheet.create({
     borderCurve: "continuous",
   },
   startText: {
-    color: theme.colors.white,
+    color: theme.colors.dark,
     fontSize: hp(2),
     letterSpacing: 1,
     alignSelf: "center",
+    fontFamily: "Montserrat_400Regular",
   },
   cartCont: {
     width: 100,
     height: 100,
+  },
+  detailsContainer: {
+    paddingHorizontal: 20,
+    backgroundColor: theme.colors.grayBg,
+    paddingVertical: 14,
+    marginBottom: 50,
+    // marginHorizontal: wp(2),
+    borderRadius: 3,
+    gap: 20,
+  },
+  textCont: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });

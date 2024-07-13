@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Entypo } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { theme } from "../constants/theme";
 
-const CartIconWithBadge = ({ size, color }) => {
+const CartIconWithBadge = ({ focused }) => {
   const cartItems = useSelector((state) => state.cart.cart);
   const totalItems = cartItems.reduce(
     (total, item) => total + item.quantity,
@@ -13,7 +13,11 @@ const CartIconWithBadge = ({ size, color }) => {
 
   return (
     <View style={{ width: 24, height: 24, margin: 5 }}>
-      <Entypo name="shopping-cart" size={size} color={color} />
+      <AntDesign
+        name="shoppingcart"
+        size={22}
+        color={focused ? "#0071ff" : "white"}
+      />
       {totalItems > 0 && (
         <View style={styles.badgeContainer}>
           <Text style={styles.badgeText}>{totalItems}</Text>

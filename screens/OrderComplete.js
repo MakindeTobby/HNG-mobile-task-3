@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   ImageBackground,
   Pressable,
@@ -10,36 +9,35 @@ import {
 import { theme } from "../constants/theme";
 import { hp } from "../helpers/common";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { clearCart } from "../store/Slices/CartSlice";
+import { AntDesign } from "@expo/vector-icons";
 
 const OrderSuccessScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const delCart = () => {
+    dispatch(clearCart());
+    navigation.navigate("Home");
+  };
+
   return (
     <ImageBackground
-      source={require("../assets/images/lady.png")}
+      source={require("../assets/images/confetti.png")}
       style={styles.background}
     >
       <View style={styles.overlay}>
-        <Text style={styles.text}>Success!</Text>
-        <View>
-          <Text
-            style={{
-              color: "#fff",
-              textAlign: "center",
-              marginBottom: 20,
-              fontSize: 15,
-            }}
-          >
-            Your order will be delivered soon. Thank you for choosing our app!
-          </Text>
+        <View style={styles.circle}>
+          <AntDesign name="check" size={40} color="white" />
         </View>
+        <Text style={styles.text}>Payment Successful</Text>
         <View>
-          <Pressable
-            style={styles.startButton}
-            onPress={() => navigation.navigate("Home")}
-          >
-            <Text style={styles.startText}>CONTINUE SHOPPING</Text>
-          </Pressable>
+          <Text style={styles.thanksText}>Thanks for your purchase</Text>
         </View>
+        <Pressable style={styles.startButton} onPress={delCart}>
+          <Text style={styles.startText}>CONTINUE SHOPPING</Text>
+        </Pressable>
       </View>
     </ImageBackground>
   );
@@ -62,11 +60,26 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
   },
+  circle: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: theme.colors.primary,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
+  },
   text: {
-    fontSize: 28,
+    fontSize: 20,
     color: "white",
     marginBottom: 20,
-    fontWeight: "bold",
+    fontFamily: "Montserrat_600SemiBold",
+  },
+  thanksText: {
+    color: "#fff",
+    textAlign: "center",
+    marginBottom: 20,
+    fontSize: 15,
   },
   startButton: {
     marginBottom: 5,
