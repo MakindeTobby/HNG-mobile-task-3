@@ -14,6 +14,7 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import CategorySection from "../components/CategorySection";
 import { wp } from "../helpers/common";
+import Loader from "../components/Loader";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -47,16 +48,9 @@ const Home = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <SafeAreaView style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={theme.colors.neutral(0.9)} />
-      </SafeAreaView>
-    );
-  }
-
   return (
     <SafeAreaView style={styles.container}>
+      <Loader visible={isLoading} />
       <StatusBar barStyle={"default"} />
       <Header name={"Product List"} />
       <ScrollView showsVerticalScrollIndicator={false}>

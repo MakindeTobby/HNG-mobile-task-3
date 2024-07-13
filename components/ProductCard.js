@@ -18,7 +18,7 @@ import {
   increaseQuantity,
   removeFromCart,
 } from "../store/Slices/CartSlice";
-import { FontAwesome } from "@expo/vector-icons";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 
 const ProductCard = ({ item }) => {
   const cartItems = useSelector((state) => state.cart.cart);
@@ -43,6 +43,10 @@ const ProductCard = ({ item }) => {
   };
   const navigation = useNavigation();
   const price = item.current_price?.[0]?.NGN[0] ?? "N/A";
+  const totalStars = 4; // Number of stars you want to display
+
+  // Array to generate stars
+  const starsArray = Array.from({ length: totalStars }, (_, index) => index);
   return (
     <TouchableWithoutFeedback
       onPress={() => navigation.navigate("Details", { ...item })}
@@ -65,6 +69,12 @@ const ProductCard = ({ item }) => {
           >
             {item.name}
           </Text>
+        </View>
+        <View style={{ paddingVertical: 4, flexDirection: "row", gap: 2 }}>
+          {starsArray.map((star, index) => (
+            <AntDesign key={index} name="star" size={13} color={"#FFC657"} />
+          ))}
+          <AntDesign name="staro" size={13} color={"#FFC657"} />
         </View>
         <View>
           <Text

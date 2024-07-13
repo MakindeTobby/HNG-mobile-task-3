@@ -78,7 +78,10 @@ const Stack = createNativeStackNavigator();
 
 const Navigation = () => (
   <NavigationContainer>
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Main"
+    >
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Details" component={ProductDetail} />
       <Stack.Screen name="Complete" component={OrderSuccessScreen} />
